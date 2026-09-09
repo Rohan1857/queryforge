@@ -1,0 +1,12 @@
+{
+  "name": "queryforge",
+  "private": true,
+  "scripts": {
+    "server": "make dev",
+    "client": "npm --prefix frontend run dev",
+    "dev:all": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

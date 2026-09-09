@@ -1,0 +1,128 @@
+############################
+# Python
+############################
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+
+############################
+# Virtual Environments
+############################
+.venv/
+venv/
+env/
+ENV/
+pythonenv/
+
+############################
+# Python Packaging
+############################
+build/
+dist/
+*.egg-info/
+.eggs/
+
+############################
+# Python Cache
+############################
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+.cache/
+
+############################
+# Logs
+############################
+*.log
+logs/
+
+############################
+# Environment Variables
+############################
+.env
+.env.*
+!.env.example
+
+############################
+# Database Files
+############################
+*.sqlite
+*.sqlite3
+*.db
+
+############################
+# Uploads / User Files
+############################
+uploads/
+data/
+temp/
+tmp/
+
+############################
+# Node / Frontend
+############################
+node_modules/
+frontend/node_modules/
+frontend/dist/
+dist/
+build/
+
+############################
+# Vite
+############################
+.vite/
+
+############################
+# OS Files
+############################
+.DS_Store
+Thumbs.db
+
+############################
+# IDE
+############################
+.vscode/
+.idea/
+*.swp
+*.swo
+
+############################
+# Docker
+############################
+postgres_data/
+redis_data/
+docker-data/
+*.pid
+
+############################
+# Playwright
+############################
+playwright-report/
+
+############################
+# Coverage
+############################
+.coverage
+coverage/
+htmlcov/
+
+############################
+# Secrets
+############################
+secrets.json
+credentials.json
+*.pem
+*.key
+
+############################
+# Test Artifacts
+############################
+pytestdebug.log
+
+############################
+# Temporary Files
+############################
+*.tmp
+*.temp

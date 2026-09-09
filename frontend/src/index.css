@@ -1,0 +1,210 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-gray-50 text-gray-900 antialiased dark:bg-gray-950 dark:text-gray-100;
+  }
+
+  * {
+    @apply border-gray-200 dark:border-gray-800;
+  }
+}
+
+@layer components {
+  .dot-grid-bg {
+    background-image: radial-gradient(circle, #d1d5db 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+
+  .dark .dot-grid-bg {
+    background-image: radial-gradient(circle, #374151 1px, transparent 1px);
+  }
+
+  /* Skeleton shimmer placeholder */
+  .skeleton {
+    @apply relative overflow-hidden bg-gray-200 dark:bg-gray-800;
+    background: linear-gradient(
+      90deg,
+      theme("colors.gray.200") 25%,
+      theme("colors.gray.100") 50%,
+      theme("colors.gray.200") 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+
+  .dark .skeleton {
+    background: linear-gradient(
+      90deg,
+      theme("colors.gray.800") 25%,
+      theme("colors.gray.700") 50%,
+      theme("colors.gray.800") 75%
+    );
+    background-size: 200% 100%;
+  }
+
+  /* Glass morphism effect for prompt bar */
+  .glass {
+    @apply bg-white/80 backdrop-blur-xl dark:bg-gray-900/80;
+  }
+}
+
+/* ── react-grid-layout styles ──────────────────────────────── */
+
+.react-grid-layout {
+  position: relative;
+  transition: height 200ms ease;
+}
+
+.react-grid-item {
+  transition: all 200ms ease;
+  transition-property: left, top, width, height;
+}
+
+.react-grid-item.cssTransforms {
+  transition-property: transform, width, height;
+}
+
+.react-grid-item.resizing {
+  opacity: 0.9;
+  z-index: 1;
+}
+
+.react-grid-item.react-draggable-dragging {
+  transition: none;
+  z-index: 3;
+  will-change: transform;
+}
+
+.react-grid-placeholder {
+  background: rgb(59 130 246 / 0.2);
+  border: 2px dashed rgb(59 130 246 / 0.5);
+  border-radius: 0.75rem;
+  opacity: 1;
+  transition-duration: 100ms;
+  z-index: 2;
+}
+
+.react-resizable-handle {
+  position: absolute;
+  z-index: 4;
+}
+
+.react-resizable-handle::after {
+  content: "";
+  position: absolute;
+  border-radius: 9999px;
+  background: rgb(59 130 246 / 0.35);
+  opacity: 0;
+  transition: opacity 150ms ease;
+}
+
+.react-grid-item:hover .react-resizable-handle::after,
+.react-grid-item.resizing .react-resizable-handle::after {
+  opacity: 1;
+}
+
+.react-resizable-handle-n,
+.react-resizable-handle-s {
+  left: 50%;
+  width: 34px;
+  height: 12px;
+  transform: translateX(-50%);
+}
+
+.react-resizable-handle-n {
+  top: -6px;
+  cursor: n-resize;
+}
+
+.react-resizable-handle-s {
+  bottom: -6px;
+  cursor: s-resize;
+}
+
+.react-resizable-handle-n::after,
+.react-resizable-handle-s::after {
+  left: 50%;
+  top: 50%;
+  width: 18px;
+  height: 3px;
+  transform: translate(-50%, -50%);
+}
+
+.react-resizable-handle-e,
+.react-resizable-handle-w {
+  top: 50%;
+  width: 12px;
+  height: 34px;
+  transform: translateY(-50%);
+}
+
+.react-resizable-handle-e {
+  right: -6px;
+  cursor: e-resize;
+}
+
+.react-resizable-handle-w {
+  left: -6px;
+  cursor: w-resize;
+}
+
+.react-resizable-handle-e::after,
+.react-resizable-handle-w::after {
+  left: 50%;
+  top: 50%;
+  width: 3px;
+  height: 18px;
+  transform: translate(-50%, -50%);
+}
+
+.react-resizable-handle-ne,
+.react-resizable-handle-nw,
+.react-resizable-handle-se,
+.react-resizable-handle-sw {
+  width: 18px;
+  height: 18px;
+}
+
+.react-resizable-handle-ne {
+  top: -6px;
+  right: -6px;
+  cursor: ne-resize;
+}
+
+.react-resizable-handle-nw {
+  top: -6px;
+  left: -6px;
+  cursor: nw-resize;
+}
+
+.react-resizable-handle-se {
+  right: -6px;
+  bottom: -6px;
+  cursor: se-resize;
+}
+
+.react-resizable-handle-sw {
+  left: -6px;
+  bottom: -6px;
+  cursor: sw-resize;
+}
+
+.react-resizable-handle-ne::after,
+.react-resizable-handle-nw::after,
+.react-resizable-handle-se::after,
+.react-resizable-handle-sw::after {
+  left: 50%;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  transform: translate(-50%, -50%);
+}
+
+/* ── Page transition ────────────────────────────────────────── */
+
+main > * {
+  animation: fadeIn 200ms ease-out;
+}
