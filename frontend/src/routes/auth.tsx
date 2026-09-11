@@ -45,7 +45,7 @@ export default function AuthPage() {
   const { login, devLogin, register, googleLogin } = useAuthStore();
   const navigate = useNavigate();
   const showDevLogin = ["localhost", "127.0.0.1"].includes(window.location.hostname);
-  const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+  const googleClientId = (import.meta.env.VITE_GOOGLE_CLIENT_ID as string | undefined)?.trim();
 
   useEffect(() => {
     if (!googleClientId) return;

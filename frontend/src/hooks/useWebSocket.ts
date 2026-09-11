@@ -11,8 +11,9 @@ export function useWebSocket(dashboardId: string | undefined) {
     const token = localStorage.getItem("token");
     if (!dashboardId || !token) return;
 
-    const wsUrl = import.meta.env.VITE_API_URL
-      ? `${(import.meta.env.VITE_API_URL as string).replace(/\/+$/, "")}/dashboard`
+    const rawApiUrl = (import.meta.env.VITE_API_URL as string | undefined)?.trim();
+    const wsUrl = rawApiUrl
+      ? `${rawApiUrl.replace(/\/+$/, "")}/dashboard`
       : "/dashboard";
 
     const socket = io(wsUrl, {

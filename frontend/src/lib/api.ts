@@ -6,8 +6,9 @@ import type { Widget, WidgetCreate, WidgetUpdate } from "@/types/widget";
 
 // ── Axios instance ──────────────────────────────────────────
 
-const apiBase = import.meta.env.VITE_API_URL
-  ? `${(import.meta.env.VITE_API_URL as string).replace(/\/+$/, "")}/api`
+const rawApiUrl = (import.meta.env.VITE_API_URL as string | undefined)?.trim();
+const apiBase = rawApiUrl
+  ? `${rawApiUrl.replace(/\/+$/, "")}/api`
   : "/api";
 
 const api = axios.create({ baseURL: apiBase });
