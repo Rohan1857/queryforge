@@ -88,7 +88,7 @@ async def disconnect(sid):
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Startup
-    logger.info("Starting Prompt BI backend...")
+    logger.info("Starting QueryForge backend...")
 
     # Store socketio reference for route handlers
     app.state.sio = sio
@@ -107,12 +107,12 @@ async def lifespan(app: FastAPI):
     # Shutdown
     if app.state.redis:
         await app.state.redis.close()
-    logger.info("Prompt BI backend shut down")
+    logger.info("QueryForge backend shut down")
 
 
 app = FastAPI(
-    title="Prompt BI",
-    description="Natural-language Business Intelligence platform",
+    title="QueryForge",
+    description="Governed natural-language BI & SQL analytics platform",
     version="1.0.0",
     lifespan=lifespan,
 )

@@ -19,11 +19,16 @@ export function Sidebar() {
         collapsed ? "w-16" : "w-56",
       )}
     >
-      <div className="flex h-14 items-center justify-between px-4">
+      <div className="flex h-14 items-center justify-between px-4 border-b border-gray-100 dark:border-gray-800/80">
         {!collapsed && (
-          <span className="text-lg font-semibold text-gray-900 dark:text-white">
-            Prompt BI
-          </span>
+          <div className="flex items-center gap-2.5">
+            <span className="flex h-7 w-7 items-center justify-center rounded-md bg-slate-900 font-mono text-xs font-bold text-white shadow-sm dark:bg-white dark:text-slate-950">
+              QF
+            </span>
+            <span className="text-sm font-bold tracking-tight text-slate-900 dark:text-white">
+              QueryForge
+            </span>
+          </div>
         )}
         <button
           onClick={() => setCollapsed(!collapsed)}
@@ -43,12 +48,12 @@ export function Sidebar() {
               clsx(
                 "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
                 isActive
-                  ? "bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400"
-                  : "text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800",
+                  ? "bg-slate-100 text-slate-900 font-semibold dark:bg-slate-800 dark:text-white"
+                  : "text-slate-600 hover:bg-slate-50 dark:text-slate-400 dark:hover:bg-slate-800/50",
               )
             }
           >
-            <Icon size={20} />
+            <Icon size={18} />
             {!collapsed && <span>{label}</span>}
           </NavLink>
         ))}

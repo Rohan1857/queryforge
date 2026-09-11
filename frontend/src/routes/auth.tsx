@@ -1,7 +1,6 @@
 import { useState, useMemo, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "@/stores/authStore";
-import { BarChart3 } from "lucide-react";
 import { clsx } from "clsx";
 
 declare global {
@@ -147,28 +146,25 @@ export default function AuthPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4 dark:bg-gray-950">
-      {/* Subtle background pattern */}
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(59,130,246,0.05),transparent_60%)]" />
-
+    <div className="flex min-h-screen items-center justify-center bg-slate-50 px-4 dark:bg-slate-950">
       <div className="relative w-full max-w-sm">
         {/* Brand */}
         <div className="mb-8 text-center">
-          <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-blue-600 shadow-lg shadow-blue-600/20">
-            <BarChart3 className="text-white" size={24} />
+          <div className="mx-auto mb-3 flex h-11 w-11 items-center justify-center rounded-lg bg-slate-900 font-mono text-sm font-bold tracking-wider text-white shadow-sm dark:bg-white dark:text-slate-950">
+            QF
           </div>
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-            Prompt BI
+          <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
+            QueryForge
           </h1>
-          <p className="mt-1 text-sm text-gray-500">
-            Natural-language Business Intelligence
+          <p className="mt-1 text-xs font-medium text-slate-500 dark:text-slate-400">
+            Governed SQL Analytics & Autonomous Data Intelligence
           </p>
         </div>
 
         {/* Card */}
-        <div className="rounded-xl bg-white p-6 shadow-sm ring-1 ring-gray-200/50 dark:bg-gray-900 dark:ring-gray-800">
+        <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
           {/* Tabs */}
-          <div className="mb-6 flex rounded-lg bg-gray-100 p-1 dark:bg-gray-800">
+          <div className="mb-6 flex rounded-lg bg-slate-100 p-1 dark:bg-slate-800">
             {(["login", "register"] as const).map((t) => (
               <button
                 key={t}
@@ -299,10 +295,10 @@ export default function AuthPage() {
             <button
               type="submit"
               disabled={loading || (tab === "register" && !canRegister)}
-              className="w-full rounded-lg bg-blue-600 py-2.5 text-sm font-medium text-white transition-colors hover:bg-blue-700 disabled:opacity-50"
+              className="w-full rounded-lg bg-slate-900 py-2.5 text-sm font-medium text-white transition-colors hover:bg-slate-800 disabled:opacity-50 dark:bg-white dark:text-slate-950 dark:hover:bg-slate-100"
             >
               {loading
-                ? "..."
+                ? "Processing..."
                 : tab === "login"
                   ? "Sign In"
                   : "Create Account"}
@@ -312,10 +308,10 @@ export default function AuthPage() {
               <div className="flex flex-col items-center gap-2 pt-2">
                 <div className="relative w-full">
                   <div className="absolute inset-0 flex items-center">
-                    <div className="w-full border-t border-gray-300 dark:border-gray-700" />
+                    <div className="w-full border-t border-slate-200 dark:border-slate-800" />
                   </div>
-                  <div className="relative flex justify-center text-xs uppercase">
-                    <span className="bg-white px-2 text-gray-500 dark:bg-gray-900 dark:text-gray-400">
+                  <div className="relative flex justify-center text-xs uppercase tracking-wider">
+                    <span className="bg-white px-2 text-slate-400 dark:bg-slate-900 dark:text-slate-500">
                       Or continue with
                     </span>
                   </div>
@@ -329,9 +325,9 @@ export default function AuthPage() {
                 type="button"
                 onClick={handleDevLogin}
                 disabled={loading}
-                className="w-full rounded-lg border border-dashed border-blue-300 bg-blue-50 py-2.5 text-sm font-medium text-blue-700 transition-colors hover:bg-blue-100 disabled:opacity-50 dark:border-blue-700 dark:bg-blue-950/40 dark:text-blue-200 dark:hover:bg-blue-950/60"
+                className="w-full rounded-lg border border-slate-200 py-2 text-xs font-medium text-slate-600 transition-colors hover:bg-slate-50 dark:border-slate-800 dark:text-slate-400 dark:hover:bg-slate-800/50"
               >
-                Use Developer Sign In
+                Developer Demo Sign In
               </button>
             )}
           </form>

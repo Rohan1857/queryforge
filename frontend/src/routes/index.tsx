@@ -45,36 +45,38 @@ export default function DashboardListPage() {
     <div className="p-8">
       <div className="mb-8 flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Dashboards</h1>
-          <p className="mt-1 text-sm text-gray-500">
-            Create and manage your BI dashboards
+          <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">Dashboards</h1>
+          <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
+            Create, configure, and monitor analytical dashboards
           </p>
         </div>
         <button
           onClick={() => setShowCreate(true)}
-          className="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+          className="flex items-center gap-2 rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-slate-800 dark:bg-white dark:text-slate-950 dark:hover:bg-slate-100"
         >
-          <Plus size={18} />
+          <Plus size={16} />
           New Dashboard
         </button>
       </div>
 
       {isLoading ? (
         <div className="flex items-center justify-center py-20">
-          <div className="h-8 w-8 animate-spin rounded-full border-2 border-blue-600 border-t-transparent" />
+          <div className="h-6 w-6 animate-spin rounded-full border-2 border-slate-900 border-t-transparent dark:border-white" />
         </div>
       ) : dashboards.length === 0 ? (
-        <div className="flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-gray-300 py-20 dark:border-gray-700">
-          <LayoutDashboard size={48} className="mb-4 text-gray-300 dark:text-gray-600" />
-          <h3 className="text-lg font-medium text-gray-900 dark:text-white">
-            No dashboards yet
+        <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-slate-300 py-16 text-center dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/40">
+          <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-500 shadow-sm dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400">
+            <LayoutDashboard size={20} />
+          </div>
+          <h3 className="text-sm font-semibold text-slate-900 dark:text-white">
+            No dashboards created
           </h3>
-          <p className="mt-1 text-sm text-gray-500">
-            Create your first dashboard to get started
+          <p className="mt-1 max-w-xs text-xs text-slate-500 dark:text-slate-400">
+            Connect a database or upload a dataset to begin generating dashboards.
           </p>
           <button
             onClick={() => setShowCreate(true)}
-            className="mt-4 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+            className="mt-4 rounded-md bg-slate-900 px-3.5 py-1.5 text-xs font-medium text-white transition-colors hover:bg-slate-800 dark:bg-white dark:text-slate-950 dark:hover:bg-slate-100"
           >
             Create Dashboard
           </button>

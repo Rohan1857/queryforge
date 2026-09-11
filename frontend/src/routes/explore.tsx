@@ -42,10 +42,10 @@ interface ExploreResult {
 // ── Suggestion categories ────────────────────────────────────
 
 const SUGGESTION_CATEGORIES = [
-  { icon: TrendingUp, label: "Trends", color: "text-blue-500" },
-  { icon: BarChart3, label: "Rankings", color: "text-green-500" },
-  { icon: Hash, label: "Metrics", color: "text-amber-500" },
-  { icon: List, label: "Data", color: "text-purple-500" },
+  { icon: TrendingUp, label: "Trends", color: "text-slate-700 dark:text-slate-300" },
+  { icon: BarChart3, label: "Rankings", color: "text-slate-700 dark:text-slate-300" },
+  { icon: Hash, label: "Metrics", color: "text-slate-700 dark:text-slate-300" },
+  { icon: List, label: "Data", color: "text-slate-700 dark:text-slate-300" },
 ];
 
 // ── Component ────────────────────────────────────────────────
