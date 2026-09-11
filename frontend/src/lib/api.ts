@@ -6,7 +6,11 @@ import type { Widget, WidgetCreate, WidgetUpdate } from "@/types/widget";
 
 // ── Axios instance ──────────────────────────────────────────
 
-const api = axios.create({ baseURL: "/api" });
+const apiBase = import.meta.env.VITE_API_URL
+  ? `${(import.meta.env.VITE_API_URL as string).replace(/\/+$/, "")}/api`
+  : "/api";
+
+const api = axios.create({ baseURL: apiBase });
 
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
@@ -47,6 +51,8 @@ export const authApi = {
     api.post<TokenResponse>("/auth/register", data).then((r) => r.data),
   login: (data: { email: string; password: string }) =>
     api.post<TokenResponse>("/auth/login", data).then((r) => r.data),
+  googleLogin: (credential: string) =>
+    api.post<TokenResponse>("/auth/google", { credential }).then((r) => r.data),
   devLogin: () => api.post<TokenResponse>("/auth/dev-login").then((r) => r.data),
   me: () => api.get<AuthUser>("/auth/me").then((r) => r.data),
   updateMe: (data: { name?: string; email?: string }) =>

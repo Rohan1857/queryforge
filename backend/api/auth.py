@@ -9,7 +9,7 @@ from backend.db.session import get_db_session
 from backend.dependencies import get_current_user
 from backend.middleware.rate_limiter import limiter
 from backend.models.user import User
-from backend.schemas.user import TokenResponse, UserCreate, UserLogin, UserRead
+from backend.schemas.user import GoogleAuthRequest, TokenResponse, UserCreate, UserLogin, UserRead
 from backend.services.auth_service import create_access_token, hash_password, verify_password
 
 router = APIRouter(prefix="/auth", tags=["auth"])
@@ -44,6 +44,53 @@ async def login(request: Request, body: UserLogin, db: AsyncSession = Depends(ge
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid email or password"
         )
+
+    token = create_access_token(str(user.id), user.email)
+    return TokenResponse(access_token=token, user=UserRead.model_validate(user))
+
+
+@router.post("/google", response_model=TokenResponse)
+@limiter.limit("20/minute")
+async def google_login(
+    request: Request,
+    body: GoogleAuthRequest,
+    db: AsyncSession = Depends(get_db_session),
+):
+    try:
+        from google.oauth2 import id_token
+        from google.auth.transport import requests as google_requests
+
+        id_info = id_token.verify_oauth2_token(
+            body.credential,
+            google_requests.Request(),
+            settings.GOOGLE_CLIENT_ID if settings.GOOGLE_CLIENT_ID else None,
+        )
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail=f"Invalid Google credential: {e}",
+        )
+
+    email = id_info.get("email")
+    if not email:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Email address not provided by Google",
+        )
+
+    name = id_info.get("name") or email.split("@")[0]
+
+    result = await db.execute(select(User).where(User.email == email))
+    user = result.scalar_one_or_none()
+    if user is None:
+        user = User(
+            email=email,
+            name=name,
+            password_hash=hash_password(secrets.token_urlsafe(32)),
+        )
+        db.add(user)
+        await db.commit()
+        await db.refresh(user)
 
     token = create_access_token(str(user.id), user.email)
     return TokenResponse(access_token=token, user=UserRead.model_validate(user))

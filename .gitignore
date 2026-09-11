@@ -126,3 +126,4 @@ pytestdebug.log
 ############################
 *.tmp
 *.temp
+*.tsbuildinfo

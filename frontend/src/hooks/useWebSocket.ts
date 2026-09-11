@@ -11,7 +11,11 @@ export function useWebSocket(dashboardId: string | undefined) {
     const token = localStorage.getItem("token");
     if (!dashboardId || !token) return;
 
-    const socket = io("/dashboard", {
+    const wsUrl = import.meta.env.VITE_API_URL
+      ? `${(import.meta.env.VITE_API_URL as string).replace(/\/+$/, "")}/dashboard`
+      : "/dashboard";
+
+    const socket = io(wsUrl, {
       auth: { token },
       transports: ["websocket", "polling"],
     });

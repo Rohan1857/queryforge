@@ -5,6 +5,15 @@ class Settings(BaseSettings):
     # Database
     DATABASE_URL: str = "postgresql+asyncpg://bi_user:bi_pass@localhost:5432/queryforge"
 
+    @property
+    def async_database_url(self) -> str:
+        url = self.DATABASE_URL
+        if url.startswith("postgres://"):
+            return url.replace("postgres://", "postgresql+asyncpg://", 1)
+        if url.startswith("postgresql://") and not url.startswith("postgresql+asyncpg://"):
+            return url.replace("postgresql://", "postgresql+asyncpg://", 1)
+        return url
+
     # Redis
     REDIS_URL: str = "redis://localhost:6379"
 
@@ -27,10 +36,26 @@ class Settings(BaseSettings):
     GOOGLE_CLIENT_ID: str = ""
     GOOGLE_CLIENT_SECRET: str = ""
 
-    # Server
+    # Server & CORS
     HOST: str = "0.0.0.0"
     PORT: int = 8000
     DEBUG: bool = False
+    CORS_ORIGINS: str = ""
+
+    @property
+    def cors_origin_list(self) -> list[str]:
+        defaults = [
+            "http://localhost:5173",
+            "http://127.0.0.1:5173",
+            "http://localhost:4173",
+            "http://127.0.0.1:4173",
+            "http://localhost:3000",
+            "http://127.0.0.1:3000",
+        ]
+        if self.CORS_ORIGINS:
+            custom = [o.strip() for o in self.CORS_ORIGINS.split(",") if o.strip()]
+            return list(dict.fromkeys(defaults + custom))
+        return defaults
 
     # Development auth
     DEV_AUTH_BYPASS: bool = False

@@ -1,0 +1,50 @@
+services:
+  - type: web
+    name: queryforge-backend
+    runtime: docker
+    plan: free
+    region: oregon
+    branch: main
+    autoDeploy: true
+    dockerfilePath: ./backend.Dockerfile
+    dockerContext: .
+    healthCheckPath: /api/health
+    envVars:
+      - key: PORT
+        value: 8000
+      - key: DATABASE_URL
+        fromDatabase:
+          name: queryforge-db
+          property: connectionString
+      - key: REDIS_URL
+        fromDatabase:
+          name: queryforge-redis
+          property: connectionString
+      - key: OPENROUTER_API_KEY
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: CORS_ORIGINS
+        value: "*"
+      - key: GOOGLE_CLIENT_ID
+        sync: false
+      - key: GOOGLE_CLIENT_SECRET
+        sync: false
+      - key: LLM_MODEL
+        value: anthropic/claude-sonnet-4-20250514
+      - key: DEV_AUTH_BYPASS
+        value: "false"
+
+databases:
+  - name: queryforge-db
+    databaseName: queryforge
+    user: queryforge_user
+    plan: free
+    postgresMajorVersion: "15"
+    ipAllowList: []
+
+  - name: queryforge-redis
+    plan: free
+    maxmemoryPolicy: allkeys-lru
+    ipAllowList: []
+

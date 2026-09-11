@@ -1,8 +1,14 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "@/stores/authStore";
 import { BarChart3 } from "lucide-react";
 import { clsx } from "clsx";
+
+declare global {
+  interface Window {
+    google?: any;
+  }
+}
 
 // ── Password strength helper ───────────────────────────────────
 
@@ -37,9 +43,56 @@ export default function AuthPage() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const { login, devLogin, register } = useAuthStore();
+  const { login, devLogin, register, googleLogin } = useAuthStore();
   const navigate = useNavigate();
   const showDevLogin = ["localhost", "127.0.0.1"].includes(window.location.hostname);
+  const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+
+  useEffect(() => {
+    if (!googleClientId) return;
+
+    const setupGoogle = () => {
+      if (window.google?.accounts?.id) {
+        window.google.accounts.id.initialize({
+          client_id: googleClientId,
+          callback: async (response: { credential?: string }) => {
+            if (!response.credential) return;
+            try {
+              setLoading(true);
+              await googleLogin(response.credential);
+              navigate("/");
+            } catch (err: any) {
+              setError(err?.response?.data?.detail || "Google authentication failed");
+            } finally {
+              setLoading(false);
+            }
+          },
+        });
+
+        const btn = document.getElementById("google-login-target");
+        if (btn) {
+          window.google.accounts.id.renderButton(btn, {
+            theme: "outline",
+            size: "large",
+            width: 320,
+            text: tab === "login" ? "signin_with" : "signup_with",
+          });
+        }
+      }
+    };
+
+    if (window.google?.accounts?.id) {
+      setupGoogle();
+    } else {
+      const interval = setInterval(() => {
+        if (window.google?.accounts?.id) {
+          clearInterval(interval);
+          setupGoogle();
+        }
+      }, 200);
+      return () => clearInterval(interval);
+    }
+  }, [googleClientId, tab]);
 
   const strength = useMemo(() => getPasswordStrength(password), [password]);
 
@@ -254,6 +307,22 @@ export default function AuthPage() {
                   ? "Sign In"
                   : "Create Account"}
             </button>
+
+            {googleClientId && (
+              <div className="flex flex-col items-center gap-2 pt-2">
+                <div className="relative w-full">
+                  <div className="absolute inset-0 flex items-center">
+                    <div className="w-full border-t border-gray-300 dark:border-gray-700" />
+                  </div>
+                  <div className="relative flex justify-center text-xs uppercase">
+                    <span className="bg-white px-2 text-gray-500 dark:bg-gray-900 dark:text-gray-400">
+                      Or continue with
+                    </span>
+                  </div>
+                </div>
+                <div id="google-login-target" className="flex justify-center w-full min-h-[44px]" />
+              </div>
+            )}
 
             {tab === "login" && showDevLogin && (
               <button

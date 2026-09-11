@@ -15,6 +15,11 @@ if config.config_file_name is not None:
 database_url = os.getenv(
     "DATABASE_URL", "postgresql+asyncpg://bi_user:bi_pass@localhost:5432/queryforge"
 )
+if database_url.startswith("postgres://"):
+    database_url = database_url.replace("postgres://", "postgresql+asyncpg://", 1)
+elif database_url.startswith("postgresql://") and not database_url.startswith("postgresql+asyncpg://"):
+    database_url = database_url.replace("postgresql://", "postgresql+asyncpg://", 1)
+
 config.set_main_option("sqlalchemy.url", database_url)
 
 from backend.db.base import Base  # noqa: E402
