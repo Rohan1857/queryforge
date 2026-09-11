@@ -109,8 +109,11 @@ coverage/
 htmlcov/
 
 ############################
-# Secrets
+# Secrets & Environment
 ############################
+.env
+.env.*
+!.env.example
 secrets.json
 credentials.json
 *.pem
