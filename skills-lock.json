@@ -1,11 +1,23 @@
 {
   "version": 1,
   "skills": {
+    "anti-ai-slop-ui": {
+      "source": "rwcod/anti-ai-slop-ui",
+      "sourceType": "github",
+      "skillPath": "SKILL.md",
+      "computedHash": "69bde2080d95857f73c9b2a7d9c5f49856ddc5f4e663fb8bc92c56754bf8cd5d"
+    },
     "deploy-to-vercel": {
       "source": "vercel-labs/agent-skills",
       "sourceType": "github",
       "skillPath": "skills/deploy-to-vercel/SKILL.md",
       "computedHash": "3a0481591523c55ecfe2569b6b28b2dcbfa3742367667697219d29170981ad53"
+    },
+    "frontend-design": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "skillPath": "skills/frontend-design/SKILL.md",
+      "computedHash": "106acf230014cbb43ca34e6410371321b56ca742f9ee0442e8ec05bf02eb0384"
     },
     "render-deploy": {
       "source": "openai/skills",

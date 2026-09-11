@@ -1,0 +1,66 @@
+{
+  "product": "",
+  "visualDirection": "",
+  "palette": {
+    "background": "",
+    "surface": "",
+    "surfaceMuted": "",
+    "textPrimary": "",
+    "textSecondary": "",
+    "border": "",
+    "accentPrimary": "",
+    "accentSecondary": "",
+    "success": "",
+    "warning": "",
+    "danger": "",
+    "info": ""
+  },
+  "typography": {
+    "uiFont": "",
+    "displayFont": "",
+    "monoFont": "",
+    "scale": {
+      "xs": "",
+      "sm": "",
+      "base": "",
+      "lg": "",
+      "xl": "",
+      "2xl": "",
+      "display": ""
+    },
+    "rules": []
+  },
+  "spacing": {
+    "density": "compact | balanced | spacious",
+    "scale": [],
+    "sectionSpacing": "",
+    "cardPadding": ""
+  },
+  "radius": {
+    "small": "",
+    "medium": "",
+    "large": "",
+    "rules": []
+  },
+  "elevation": {
+    "surface": "",
+    "popover": "",
+    "modal": "",
+    "rules": []
+  },
+  "icons": {
+    "set": "",
+    "style": "",
+    "emojiAllowed": false,
+    "rules": []
+  },
+  "motion": {
+    "principle": "functional only",
+    "durationFast": "",
+    "durationNormal": "",
+    "easing": "",
+    "allowedUses": [],
+    "forbiddenUses": []
+  },
+  "antiSlopConstraints": []
+}

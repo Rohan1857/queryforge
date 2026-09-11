@@ -127,38 +127,38 @@ export default function ConnectionsPage() {
           </div>
           <button
             onClick={handleAddNew}
-            className="flex items-center gap-1.5 rounded-lg bg-blue-600 px-3 py-2 text-sm font-medium text-white hover:bg-blue-700 transition-colors"
+            className="flex items-center gap-1.5 rounded-md bg-slate-900 px-3 py-1.5 text-xs font-medium text-white transition-colors hover:bg-slate-800 dark:bg-white dark:text-slate-950 dark:hover:bg-slate-100"
           >
-            <Plus size={16} />
-            Add
+            <Plus size={14} />
+            Add Connection
           </button>
         </div>
 
-        <div className="overflow-auto p-4" style={{ height: "calc(100% - 73px)" }}>
+        <div className="overflow-auto p-3" style={{ height: "calc(100% - 73px)" }}>
           {isLoading ? (
-            <div className="space-y-3">
+            <div className="space-y-2">
               {[1, 2, 3].map((i) => (
                 <div
                   key={i}
-                  className="h-20 animate-pulse rounded-xl bg-gray-100 dark:bg-gray-800"
+                  className="h-16 rounded-md border border-slate-200 bg-slate-50 dark:border-slate-800 dark:bg-slate-900"
                 />
               ))}
             </div>
           ) : connections.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-16">
               <Database
-                size={40}
-                className="mb-3 text-gray-300 dark:text-gray-600"
+                size={36}
+                className="mb-3 text-slate-300 dark:text-slate-600"
               />
-              <p className="text-sm font-medium text-gray-500">
-                No connections yet
+              <p className="text-xs font-medium text-slate-500">
+                No connections configured
               </p>
-              <p className="mt-1 text-xs text-gray-400">
-                Add a data source to get started
+              <p className="mt-1 text-[11px] text-slate-400">
+                Add a data source to begin running SQL
               </p>
             </div>
           ) : (
-            <div className="space-y-2">
+            <div className="space-y-1.5">
               {connections.map((c) => {
                 const Icon = TYPE_ICONS[c.type] ?? Database;
                 const isSelected = selectedId === c.id && !showForm;
@@ -168,48 +168,41 @@ export default function ConnectionsPage() {
                     key={c.id}
                     onClick={() => handleSelect(c)}
                     className={clsx(
-                      "flex w-full items-center justify-between rounded-xl border p-3 text-left transition-all",
+                      "flex w-full items-center justify-between rounded-md border p-2.5 text-left transition-colors",
                       isSelected
-                        ? "border-blue-500 bg-blue-50 shadow-sm dark:border-blue-500 dark:bg-blue-900/20"
-                        : "border-gray-200 bg-white hover:border-gray-300 hover:shadow-sm dark:border-gray-800 dark:bg-gray-900 dark:hover:border-gray-700",
+                        ? "border-slate-900 bg-slate-50 dark:border-slate-100 dark:bg-slate-900"
+                        : "border-slate-200 bg-white hover:border-slate-300 dark:border-slate-800 dark:bg-slate-950 dark:hover:border-slate-700",
                     )}
                   >
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-2.5">
                       <div
                         className={clsx(
-                          "flex h-9 w-9 items-center justify-center rounded-lg",
+                          "flex h-8 w-8 items-center justify-center rounded-md",
                           isSelected
-                            ? "bg-blue-100 dark:bg-blue-900/30"
-                            : "bg-gray-100 dark:bg-gray-800",
+                            ? "bg-slate-900 text-white dark:bg-white dark:text-slate-950"
+                            : "bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-400",
                         )}
                       >
-                        <Icon
-                          size={18}
-                          className={clsx(
-                            isSelected
-                              ? "text-blue-600 dark:text-blue-400"
-                              : "text-gray-500",
-                          )}
-                        />
+                        <Icon size={15} />
                       </div>
                       <div>
-                        <p className="text-sm font-medium text-gray-900 dark:text-white">
+                        <p className="text-xs font-semibold text-slate-900 dark:text-white">
                           {c.name}
                         </p>
-                        <div className="flex items-center gap-2 text-xs text-gray-500">
-                          <span className="rounded bg-gray-100 px-1.5 py-0.5 dark:bg-gray-800">
+                        <div className="flex items-center gap-2 font-mono text-[10px] text-slate-500">
+                          <span className="rounded bg-slate-100 px-1 py-0.5 uppercase dark:bg-slate-800">
                             {c.type}
                           </span>
                           <span className="flex items-center gap-1">
                             {c.status === "active" ? (
-                              <span className="h-1.5 w-1.5 rounded-full bg-green-500" />
+                              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
                             ) : (
-                              <span className="h-1.5 w-1.5 rounded-full bg-red-500" />
+                              <span className="h-1.5 w-1.5 rounded-full bg-rose-500" />
                             )}
                             {c.status}
                           </span>
                           {c.schema_cache && (
-                            <span>
+                            <span className="tabular-nums">
                               {c.schema_cache.tables?.length ?? 0} tables
                             </span>
                           )}
@@ -217,27 +210,27 @@ export default function ConnectionsPage() {
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-1">
+                    <div className="flex items-center gap-0.5">
                       <button
                         onClick={(e) => handleTest(c.id, e)}
                         title="Test connection"
-                        className="rounded-lg p-1.5 text-gray-400 hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800 dark:hover:text-gray-300"
+                        className="rounded p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-700 dark:hover:bg-slate-800 dark:hover:text-slate-200"
                       >
-                        <CheckCircle size={14} />
+                        <CheckCircle size={13} />
                       </button>
                       <button
                         onClick={(e) => handleSync(c.id, e)}
                         title="Sync schema"
-                        className="rounded-lg p-1.5 text-gray-400 hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800 dark:hover:text-gray-300"
+                        className="rounded p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-700 dark:hover:bg-slate-800 dark:hover:text-slate-200"
                       >
-                        <RefreshCw size={14} />
+                        <RefreshCw size={13} />
                       </button>
                       <button
                         onClick={(e) => handleDelete(c.id, e)}
                         title="Delete"
-                        className="rounded-lg p-1.5 text-gray-400 hover:text-red-500"
+                        className="rounded p-1 text-slate-400 hover:text-rose-500"
                       >
-                        <Trash2 size={14} />
+                        <Trash2 size={13} />
                       </button>
                     </div>
                   </button>

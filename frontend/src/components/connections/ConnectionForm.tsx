@@ -292,7 +292,7 @@ export function ConnectionForm({ onComplete }: ConnectionFormProps) {
             <h3 className="mb-4 text-sm font-medium text-gray-700 dark:text-gray-300">
               Choose a data source type
             </h3>
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+            <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3">
               {CONNECTION_TYPES.map((ct) => {
                 const Icon = ct.icon;
                 const isSelected = selectedType === ct.type;
@@ -304,32 +304,32 @@ export function ConnectionForm({ onComplete }: ConnectionFormProps) {
                       setConfig({});
                     }}
                     className={clsx(
-                      "flex flex-col items-center rounded-xl border-2 p-4 text-center transition-all",
+                      "flex flex-col items-center rounded-md border p-3 text-center transition-colors",
                       isSelected
-                        ? "border-blue-500 bg-blue-50 dark:bg-blue-900/20"
-                        : "border-gray-200 bg-white hover:border-gray-300 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-900 dark:hover:border-gray-600",
+                        ? "border-slate-900 bg-slate-50 dark:border-slate-100 dark:bg-slate-900"
+                        : "border-slate-200 bg-white hover:border-slate-300 dark:border-slate-800 dark:bg-slate-950 dark:hover:border-slate-700",
                     )}
                   >
                     <Icon
-                      size={28}
+                      size={22}
                       className={clsx(
-                        "mb-2",
+                        "mb-1.5",
                         isSelected
-                          ? "text-blue-600 dark:text-blue-400"
-                          : "text-gray-400",
+                          ? "text-slate-900 dark:text-white"
+                          : "text-slate-400",
                       )}
                     />
                     <span
                       className={clsx(
-                        "text-sm font-medium",
+                        "text-xs font-semibold",
                         isSelected
-                          ? "text-blue-700 dark:text-blue-300"
-                          : "text-gray-700 dark:text-gray-300",
+                          ? "text-slate-900 dark:text-white"
+                          : "text-slate-600 dark:text-slate-400",
                       )}
                     >
                       {ct.label}
                     </span>
-                    <span className="mt-0.5 text-[11px] text-gray-500">
+                    <span className="mt-0.5 text-[11px] text-slate-500 dark:text-slate-400">
                       {ct.description}
                     </span>
                   </button>
@@ -511,30 +511,30 @@ export function ConnectionForm({ onComplete }: ConnectionFormProps) {
             onClick={goNext}
             disabled={!canGoNext()}
             className={clsx(
-              "flex items-center gap-1.5 rounded-lg px-4 py-2 text-sm font-medium transition-colors",
+              "flex items-center gap-1.5 rounded-md px-3.5 py-1.5 text-xs font-medium transition-colors",
               canGoNext()
-                ? "bg-blue-600 text-white hover:bg-blue-700"
-                : "cursor-not-allowed bg-gray-200 text-gray-400 dark:bg-gray-800 dark:text-gray-600",
+                ? "bg-slate-900 text-white hover:bg-slate-800 dark:bg-white dark:text-slate-950 dark:hover:bg-slate-100"
+                : "cursor-not-allowed bg-slate-100 text-slate-400 dark:bg-slate-800 dark:text-slate-600",
             )}
           >
             Next
-            <ArrowRight size={16} />
+            <ArrowRight size={14} />
           </button>
         ) : (
           <button
             onClick={handleSave}
             disabled={!canGoNext() || isSaving}
             className={clsx(
-              "flex items-center gap-1.5 rounded-lg px-5 py-2 text-sm font-medium transition-colors",
+              "flex items-center gap-1.5 rounded-md px-4 py-1.5 text-xs font-medium transition-colors",
               canGoNext() && !isSaving
-                ? "bg-blue-600 text-white hover:bg-blue-700"
-                : "cursor-not-allowed bg-gray-200 text-gray-400 dark:bg-gray-800 dark:text-gray-600",
+                ? "bg-slate-900 text-white hover:bg-slate-800 dark:bg-white dark:text-slate-950 dark:hover:bg-slate-100"
+                : "cursor-not-allowed bg-slate-100 text-slate-400 dark:bg-slate-800 dark:text-slate-600",
             )}
           >
             {isSaving ? (
-              <Loader2 size={16} className="animate-spin" />
+              <Loader2 size={14} className="animate-spin" />
             ) : (
-              <Check size={16} />
+              <Check size={14} />
             )}
             {isSaving ? "Saving..." : "Save Connection"}
           </button>

@@ -269,19 +269,19 @@ export default function ExplorePage() {
               value={promptText}
               onChange={(e) => setPromptText(e.target.value)}
               onKeyDown={handleKeyDown}
-              placeholder="Ask anything about your data..."
+              placeholder="Ask anything about your data... (e.g. Total revenue by region this quarter)"
               disabled={isProcessing}
-              className="w-full rounded-xl border border-gray-300 bg-white px-4 py-2.5 pr-12 text-sm text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:focus:border-blue-400"
+              className="w-full rounded-md border border-slate-200 bg-white px-3.5 py-2 pr-10 font-sans text-xs text-slate-900 placeholder-slate-400 focus:border-slate-400 focus:outline-none dark:border-slate-800 dark:bg-slate-900 dark:text-white dark:placeholder-slate-500"
             />
             <button
               onClick={() => handleSubmit()}
               disabled={isProcessing || !promptText.trim() || !selectedConnectionId}
-              className="absolute right-2 top-1/2 -translate-y-1/2 rounded-lg bg-blue-600 p-1.5 text-white transition-colors hover:bg-blue-700 disabled:opacity-40"
+              className="absolute right-1.5 top-1/2 -translate-y-1/2 rounded bg-slate-900 p-1 text-white transition-colors hover:bg-slate-800 disabled:opacity-30 dark:bg-slate-100 dark:text-slate-950 dark:hover:bg-white"
             >
               {isProcessing ? (
-                <Loader2 size={16} className="animate-spin" />
+                <Loader2 size={14} className="animate-spin" />
               ) : (
-                <ChevronRight size={16} />
+                <ChevronRight size={14} />
               )}
             </button>
           </div>
@@ -291,16 +291,16 @@ export default function ExplorePage() {
       {/* Middle: Schema Browser + Results */}
       <div className="flex flex-1 overflow-hidden">
         {/* Left: Schema Browser (25%) */}
-        <div className="w-1/4 overflow-auto border-r border-gray-200 bg-gray-50/50 dark:border-gray-800 dark:bg-gray-950/50">
+        <div className="w-1/4 overflow-auto border-r border-slate-200 bg-slate-50/50 dark:border-slate-800 dark:bg-slate-950/50">
           <div className="p-3">
             <div className="relative mb-3">
-              <Search className="absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-gray-400" />
+              <Search className="absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-slate-400" />
               <input
                 type="text"
                 value={schemaFilter}
                 onChange={(e) => setSchemaFilter(e.target.value)}
                 placeholder="Filter tables..."
-                className="w-full rounded-lg border border-gray-200 bg-white py-1.5 pl-8 pr-3 text-xs text-gray-700 focus:border-blue-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300"
+                className="w-full rounded-md border border-slate-200 bg-white py-1.5 pl-8 pr-3 text-xs text-slate-700 focus:border-slate-400 focus:outline-none dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300"
               />
             </div>
 
@@ -484,25 +484,25 @@ function ResultCard({
   };
 
   return (
-    <div className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900">
+    <div className="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900">
       {/* Prompt text */}
-      <div className="flex items-center justify-between border-b border-gray-100 px-4 py-2.5 dark:border-gray-800">
-        <p className="text-sm font-medium text-gray-900 dark:text-white">
-          {result.prompt}
+      <div className="flex items-center justify-between border-b border-slate-100 px-4 py-2.5 dark:border-slate-800">
+        <p className="font-mono text-xs font-semibold text-slate-900 dark:text-white">
+          &gt; {result.prompt}
         </p>
         <button
           onClick={() => onCopy(result.prompt)}
-          className="shrink-0 rounded p-1 text-gray-400 hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-800"
+          className="shrink-0 rounded p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-600 dark:hover:bg-slate-800"
           title="Copy prompt"
         >
-          <Copy size={14} />
+          <Copy size={13} />
         </button>
       </div>
 
       {/* SQL toggle */}
       <button
         onClick={onToggleSql}
-        className="flex w-full items-center gap-2 border-b border-gray-100 px-4 py-2 text-xs text-gray-500 hover:bg-gray-50 dark:border-gray-800 dark:hover:bg-gray-800/50"
+        className="flex w-full items-center gap-2 border-b border-slate-100 px-4 py-1.5 font-mono text-[11px] text-slate-500 hover:bg-slate-50 dark:border-slate-800 dark:hover:bg-slate-800/50"
       >
         <Code size={12} />
         <span>SQL Query</span>
@@ -510,22 +510,22 @@ function ResultCard({
       </button>
 
       {result.showSql && (
-        <div className="border-b border-gray-100 bg-gray-50 p-4 dark:border-gray-800 dark:bg-gray-950">
-          <pre className="overflow-x-auto whitespace-pre-wrap font-mono text-xs text-gray-700 dark:text-gray-300">
+        <div className="border-b border-slate-100 bg-slate-50 p-4 dark:border-slate-800 dark:bg-slate-950">
+          <pre className="overflow-x-auto whitespace-pre-wrap font-mono text-xs text-slate-800 dark:text-slate-200">
             {queryInfo.sql}
           </pre>
         </div>
       )}
 
       {/* Stats bar */}
-      <div className="flex items-center gap-4 border-b border-gray-100 px-4 py-2 text-xs text-gray-500 dark:border-gray-800">
+      <div className="flex items-center gap-4 border-b border-slate-100 px-4 py-1.5 font-mono text-[11px] text-slate-500 dark:border-slate-800 dark:text-slate-400">
         <span className="flex items-center gap-1">
           <Table2 size={12} />
-          {queryInfo.row_count} rows
+          <span className="tabular-nums">{queryInfo.row_count}</span> rows
         </span>
         <span className="flex items-center gap-1">
           <Clock size={12} />
-          {queryInfo.execution_ms}ms
+          <span className="tabular-nums">{queryInfo.execution_ms}</span>ms
         </span>
         {result.connectionName && (
           <span className="flex items-center gap-1">
@@ -541,20 +541,20 @@ function ResultCard({
       </div>
 
       {/* Action bar */}
-      <div className="flex items-center gap-2 border-t border-gray-100 px-4 py-2.5 dark:border-gray-800">
+      <div className="flex items-center gap-2 border-t border-slate-100 px-4 py-2 dark:border-slate-800">
         {/* Add to Dashboard */}
         <div className="relative">
           <button
             onClick={() => setShowDashboardPicker(!showDashboardPicker)}
-            className="flex items-center gap-1.5 rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-blue-700"
+            className="flex items-center gap-1.5 rounded-md bg-slate-900 px-3 py-1.5 text-xs font-medium text-white transition hover:bg-slate-800 dark:bg-white dark:text-slate-950 dark:hover:bg-slate-100"
           >
             <Plus size={12} />
             Add to Dashboard
           </button>
           {showDashboardPicker && (
-            <div className="absolute bottom-full left-0 mb-1 w-48 rounded-lg border border-gray-200 bg-white py-1 shadow-lg dark:border-gray-700 dark:bg-gray-900">
+            <div className="absolute bottom-full left-0 mb-1 w-48 rounded-md border border-slate-200 bg-white p-1 shadow-md dark:border-slate-800 dark:bg-slate-950">
               {dashboards.length === 0 ? (
-                <p className="px-3 py-2 text-xs text-gray-400">
+                <p className="px-3 py-1.5 text-xs text-slate-400">
                   No dashboards yet
                 </p>
               ) : (
@@ -565,7 +565,7 @@ function ResultCard({
                       onAddToDashboard(d.id);
                       setShowDashboardPicker(false);
                     }}
-                    className="w-full px-3 py-1.5 text-left text-xs text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
+                    className="w-full rounded px-2.5 py-1.5 text-left text-xs text-slate-700 transition hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800"
                   >
                     {d.title}
                   </button>
@@ -578,7 +578,7 @@ function ResultCard({
         {/* View toggle */}
         <button
           onClick={onToggleView}
-          className="rounded-lg border border-gray-200 px-3 py-1.5 text-xs text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-800"
+          className="rounded-md border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-700 transition hover:border-slate-300 hover:text-slate-950 dark:border-slate-800 dark:text-slate-300 dark:hover:border-slate-700"
         >
           {result.viewMode === "chart" ? "Show as Table" : "Show as Chart"}
         </button>
@@ -586,7 +586,7 @@ function ResultCard({
         {/* Download CSV */}
         <button
           onClick={onDownloadCsv}
-          className="flex items-center gap-1 rounded-lg border border-gray-200 px-3 py-1.5 text-xs text-gray-600 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-800"
+          className="flex items-center gap-1 rounded-md border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-700 transition hover:border-slate-300 hover:text-slate-950 dark:border-slate-800 dark:text-slate-300 dark:hover:border-slate-700"
         >
           <Download size={12} />
           CSV
@@ -594,7 +594,7 @@ function ResultCard({
 
         {/* Explanation */}
         {response.explanation && (
-          <p className="ml-auto text-xs text-gray-400">
+          <p className="ml-auto text-xs text-slate-500 dark:text-slate-400">
             {response.explanation}
           </p>
         )}

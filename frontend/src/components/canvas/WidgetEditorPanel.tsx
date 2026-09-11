@@ -67,11 +67,11 @@ function Section({
   children: ReactNode;
 }) {
   return (
-    <section className="space-y-3 rounded-2xl border border-gray-200 bg-white/80 p-4 dark:border-gray-800 dark:bg-gray-950/60">
+    <section className="space-y-3 rounded-lg border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900">
       <div>
-        <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100">{title}</h3>
+        <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-900 dark:text-slate-100">{title}</h3>
         {description && (
-          <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">{description}</p>
+          <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">{description}</p>
         )}
       </div>
       {children}
@@ -80,7 +80,7 @@ function Section({
 }
 
 function FieldLabel({ children }: { children: ReactNode }) {
-  return <span className="text-xs font-medium uppercase tracking-wide text-gray-500 dark:text-gray-400">{children}</span>;
+  return <span className="font-mono text-[10px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">{children}</span>;
 }
 
 function SelectField({
@@ -100,7 +100,7 @@ function SelectField({
       <select
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        className="rounded-xl border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700 outline-none transition focus:border-blue-400 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
+        className="rounded-md border border-slate-200 bg-white px-3 py-1.5 text-xs text-slate-800 outline-none transition focus:border-slate-400 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-200"
       >
         {options.map((option) => (
           <option key={option.value} value={option.value}>
@@ -146,7 +146,7 @@ function InputField({
             onChange(draft);
           }
         }}
-        className="rounded-xl border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700 outline-none transition focus:border-blue-400 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
+        className="rounded-md border border-slate-200 bg-white px-3 py-1.5 text-xs text-slate-800 outline-none transition focus:border-slate-400 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-200"
       />
     </label>
   );
@@ -164,14 +164,14 @@ function ColorField({
   return (
     <label className="flex flex-col gap-1.5">
       <FieldLabel>{label}</FieldLabel>
-      <div className="flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-3 py-2 dark:border-gray-700 dark:bg-gray-900">
+      <div className="flex items-center gap-2 rounded-md border border-slate-200 bg-white px-3 py-1.5 dark:border-slate-800 dark:bg-slate-950">
         <input
           type="color"
           value={value}
           onChange={(event) => onChange(event.target.value)}
-          className="h-8 w-8 rounded border-0 bg-transparent p-0"
+          className="h-6 w-6 rounded border-0 bg-transparent p-0"
         />
-        <span className="text-sm text-gray-600 dark:text-gray-300">{value}</span>
+        <span className="font-mono text-xs text-slate-600 dark:text-slate-400">{value}</span>
       </div>
     </label>
   );
@@ -187,8 +187,8 @@ function ToggleField({
   onChange: (value: boolean) => void;
 }) {
   return (
-    <label className="flex items-center justify-between gap-3 rounded-xl border border-gray-200 bg-white px-3 py-2 dark:border-gray-700 dark:bg-gray-900">
-      <span className="text-sm text-gray-700 dark:text-gray-200">{label}</span>
+    <label className="flex items-center justify-between gap-3 rounded-md border border-slate-200 bg-white px-3 py-2 dark:border-slate-800 dark:bg-slate-950">
+      <span className="text-xs text-slate-700 dark:text-slate-300">{label}</span>
       <input type="checkbox" checked={checked} onChange={(event) => onChange(event.target.checked)} />
     </label>
   );
@@ -420,10 +420,10 @@ export function WidgetEditorPanel({ widget, activeTab, onClose, onTabChange }: P
           <button
             type="button"
             onClick={onClose}
-            className="rounded-xl p-2 text-gray-500 transition-colors hover:bg-white hover:text-gray-800 dark:hover:bg-gray-900 dark:hover:text-gray-100"
+            className="rounded-md p-1.5 text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:hover:bg-slate-900 dark:hover:text-slate-100"
             title="Close editor"
           >
-            <X size={16} />
+            <X size={14} />
           </button>
         </div>
       </div>
@@ -641,22 +641,22 @@ export function WidgetEditorPanel({ widget, activeTab, onClose, onTabChange }: P
                     {Object.values(summary.metrics).map((metric) => (
                       <div
                         key={metric.id}
-                        className="rounded-xl border border-gray-200 bg-gray-50 px-3 py-2 dark:border-gray-800 dark:bg-gray-900"
+                        className="rounded-md border border-slate-200 bg-slate-50 px-3 py-2 dark:border-slate-800 dark:bg-slate-900"
                       >
-                        <p className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">{metric.label}</p>
-                        <p className="mt-1 text-sm font-semibold text-gray-900 dark:text-gray-100">{metric.formatted}</p>
+                        <p className="font-mono text-[10px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">{metric.label}</p>
+                        <p className="mt-1 font-mono text-sm font-semibold tabular-nums text-slate-900 dark:text-slate-100">{metric.formatted}</p>
                       </div>
                     ))}
                   </div>
 
                   {summary.topValues.length > 0 && (
-                    <div className="rounded-xl border border-gray-200 bg-white px-3 py-3 dark:border-gray-800 dark:bg-gray-900">
-                      <p className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">Top values</p>
-                      <div className="mt-2 space-y-2">
+                    <div className="rounded-md border border-slate-200 bg-white px-3 py-2.5 dark:border-slate-800 dark:bg-slate-900">
+                      <p className="font-mono text-[10px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Top values</p>
+                      <div className="mt-2 space-y-1.5">
                         {summary.topValues.map((item) => (
-                          <div key={`${item.label}-${item.value}`} className="flex items-center justify-between text-sm">
-                            <span className="text-gray-600 dark:text-gray-300">{item.label}</span>
-                            <span className="font-medium text-gray-900 dark:text-gray-100">
+                          <div key={`${item.label}-${item.value}`} className="flex items-center justify-between text-xs">
+                            <span className="text-slate-600 dark:text-slate-300">{item.label}</span>
+                            <span className="font-mono font-medium tabular-nums text-slate-900 dark:text-slate-100">
                               {item.value.toLocaleString("en-US", { maximumFractionDigits: 2 })}
                             </span>
                           </div>

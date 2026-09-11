@@ -15,12 +15,12 @@ export function WidgetSummaryStrip({ metrics, compact = false }: Props) {
         <div
           key={metric.id}
           className={clsx(
-            "rounded-full border border-white/60 bg-white/70 px-2.5 py-1 text-left shadow-sm backdrop-blur dark:border-gray-700 dark:bg-gray-900/60",
-            compact ? "text-[11px]" : "text-xs",
+            "rounded border border-slate-200 bg-slate-50 px-2 py-0.5 text-left font-mono dark:border-slate-800 dark:bg-slate-900",
+            compact ? "text-[10px]" : "text-xs",
           )}
         >
-          <span className="mr-1 font-medium text-gray-500 dark:text-gray-400">{metric.label}</span>
-          <span className="font-semibold text-gray-900 dark:text-gray-100">{metric.formatted}</span>
+          <span className="mr-1.5 uppercase tracking-wider text-slate-500 dark:text-slate-400">{metric.label}:</span>
+          <span className="font-semibold tabular-nums text-slate-900 dark:text-slate-100">{metric.formatted}</span>
         </div>
       ))}
     </div>

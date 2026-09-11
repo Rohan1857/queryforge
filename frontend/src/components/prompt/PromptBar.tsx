@@ -68,19 +68,19 @@ export function PromptBar({ dashboardId }: PromptBarProps) {
     <div className="relative w-full">
       <div
         className={clsx(
-          "flex items-center gap-2 rounded-xl border bg-white px-4 py-2 shadow-sm transition-all dark:bg-gray-900",
+          "flex items-center gap-2 rounded-md border bg-white px-3.5 py-1.5 shadow-sm transition-colors dark:bg-slate-900",
           focused
-            ? "border-blue-500 ring-2 ring-blue-500/20"
-            : "border-gray-200 dark:border-gray-800",
+            ? "border-slate-900 dark:border-slate-200"
+            : "border-slate-200 dark:border-slate-800",
         )}
       >
         {connections.length > 0 && (
           <select
             value={selectedConnection}
             onChange={(e) => setSelectedConnection(e.target.value)}
-            className="max-w-[140px] rounded-md border-0 bg-gray-100 px-2 py-1 text-xs text-gray-600 focus:outline-none dark:bg-gray-800 dark:text-gray-400"
+            className="max-w-[140px] rounded border-0 bg-slate-100 px-2 py-1 font-mono text-[11px] text-slate-700 focus:outline-none dark:bg-slate-800 dark:text-slate-300"
           >
-            <option value="">{dashboardId ? "Use dashboard source" : "Select source"}</option>
+            <option value="">{dashboardId ? "Dashboard source" : "Select source"}</option>
             {connections.map((c) => (
               <option key={c.id} value={c.id}>
                 {c.name}
@@ -98,7 +98,7 @@ export function PromptBar({ dashboardId }: PromptBarProps) {
           onBlur={() => setTimeout(() => setFocused(false), 200)}
           onKeyDown={handleKeyDown}
           placeholder="Ask about your data... (Ctrl+K)"
-          className="flex-1 bg-transparent text-sm text-gray-900 placeholder-gray-400 focus:outline-none dark:text-white"
+          className="flex-1 bg-transparent text-xs text-slate-900 placeholder-slate-400 focus:outline-none dark:text-slate-100 dark:placeholder-slate-500"
           disabled={isProcessing}
         />
 
@@ -106,18 +106,18 @@ export function PromptBar({ dashboardId }: PromptBarProps) {
           onClick={() => handleSubmit()}
           disabled={isProcessing || !input.trim()}
           className={clsx(
-            "rounded-lg p-2 transition-colors",
+            "rounded-md p-1.5 transition-colors",
             isProcessing
-              ? "text-blue-500"
+              ? "text-slate-400"
               : input.trim()
-                ? "bg-blue-600 text-white hover:bg-blue-700"
-                : "text-gray-300 dark:text-gray-600",
+                ? "bg-slate-900 text-white hover:bg-slate-800 dark:bg-white dark:text-slate-950 dark:hover:bg-slate-100"
+                : "text-slate-300 dark:text-slate-600",
           )}
         >
           {isProcessing ? (
-            <Loader2 size={18} className="animate-spin" />
+            <Loader2 size={15} className="animate-spin" />
           ) : (
-            <Send size={18} />
+            <Send size={15} />
           )}
         </button>
       </div>
@@ -137,33 +137,33 @@ export function PromptBar({ dashboardId }: PromptBarProps) {
 
       {/* Result preview */}
       {lastResult && (
-        <div className="mt-3 rounded-xl border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+        <div className="mt-2.5 rounded-md border border-slate-200 bg-white p-3.5 shadow-sm dark:border-slate-800 dark:bg-slate-900">
           <div className="flex items-start gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-50 dark:bg-blue-900/30">
-              <ChartIcon size={20} className="text-blue-600 dark:text-blue-400" />
+            <div className="flex h-8 w-8 items-center justify-center rounded-md bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300">
+              <ChartIcon size={16} />
             </div>
             <div className="flex-1">
-              <h4 className="font-medium text-gray-900 dark:text-white">
+              <h4 className="text-xs font-semibold text-slate-900 dark:text-white">
                 {lastResult.widget.title}
               </h4>
-              <p className="mt-1 text-xs text-gray-500">
-                {lastResult.widget.type} &middot; {lastResult.query_info.row_count} rows &middot;{" "}
-                {lastResult.query_info.execution_ms}ms
+              <p className="mt-0.5 font-mono text-[11px] text-slate-500">
+                {lastResult.widget.type} &middot; <span className="tabular-nums">{lastResult.query_info.row_count}</span> rows &middot;{" "}
+                <span className="tabular-nums">{lastResult.query_info.execution_ms}</span>ms
               </p>
-              <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+              <p className="mt-1.5 text-xs text-slate-600 dark:text-slate-400">
                 {lastResult.explanation}
               </p>
             </div>
           </div>
-          <div className="mt-3 flex gap-2">
+          <div className="mt-2.5 flex items-center gap-2">
             {dashboardId && (
-              <div className="rounded-lg bg-emerald-50 px-3 py-1.5 text-sm font-medium text-emerald-700 dark:bg-emerald-900/20 dark:text-emerald-300">
-                Card added to dashboard
+              <div className="rounded border border-emerald-200 bg-emerald-50 px-2.5 py-1 font-mono text-[11px] font-medium text-emerald-800 dark:border-emerald-900/40 dark:bg-emerald-950/30 dark:text-emerald-400">
+                Added to dashboard
               </div>
             )}
             <button
               onClick={clearLastResult}
-              className="rounded-lg px-3 py-1.5 text-sm text-gray-600 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800"
+              className="rounded-md border border-slate-200 px-2.5 py-1 text-xs text-slate-600 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-400 dark:hover:bg-slate-800"
             >
               Dismiss
             </button>

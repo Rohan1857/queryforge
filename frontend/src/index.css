@@ -45,9 +45,9 @@
     background-size: 200% 100%;
   }
 
-  /* Glass morphism effect for prompt bar */
-  .glass {
-    @apply bg-white/80 backdrop-blur-xl dark:bg-gray-900/80;
+  /* Clean panel */
+  .panel {
+    @apply bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800;
   }
 }
 
@@ -79,12 +79,17 @@
 }
 
 .react-grid-placeholder {
-  background: rgb(59 130 246 / 0.2);
-  border: 2px dashed rgb(59 130 246 / 0.5);
-  border-radius: 0.75rem;
+  background: rgb(15 23 42 / 0.05);
+  border: 1px dashed rgb(15 23 42 / 0.35);
+  border-radius: 0.375rem;
   opacity: 1;
   transition-duration: 100ms;
   z-index: 2;
+}
+
+.dark .react-grid-placeholder {
+  background: rgb(255 255 255 / 0.05);
+  border: 1px dashed rgb(255 255 255 / 0.3);
 }
 
 .react-resizable-handle {
@@ -95,10 +100,14 @@
 .react-resizable-handle::after {
   content: "";
   position: absolute;
-  border-radius: 9999px;
-  background: rgb(59 130 246 / 0.35);
+  border-radius: 2px;
+  background: rgb(15 23 42 / 0.4);
   opacity: 0;
   transition: opacity 150ms ease;
+}
+
+.dark .react-resizable-handle::after {
+  background: rgb(255 255 255 / 0.4);
 }
 
 .react-grid-item:hover .react-resizable-handle::after,

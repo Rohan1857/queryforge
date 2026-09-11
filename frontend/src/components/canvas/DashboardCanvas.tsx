@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, type RefObject } from "react";
 import GridLayout, { type Layout } from "react-grid-layout";
-import { Plus, Sparkles } from "lucide-react";
+import { Plus } from "lucide-react";
 import { clsx } from "clsx";
 import {
   CANVAS_COLS,
@@ -148,7 +148,7 @@ export function DashboardCanvas({
 
   if (widgets.length === 0) {
     return (
-      <div className="flex-1 overflow-auto bg-slate-100/80 p-6 dark:bg-slate-900/50">
+      <div className="flex-1 overflow-auto bg-slate-100 p-6 dark:bg-slate-950">
         <div className="mx-auto flex min-h-full min-w-fit items-start justify-center">
           <div style={{ width: scaledCanvas.width, height: scaledCanvas.height }}>
             <div
@@ -162,38 +162,37 @@ export function DashboardCanvas({
               <div
                 ref={canvasRef}
                 data-dashboard-canvas
-                className="relative overflow-hidden rounded-[32px] border border-slate-300 bg-white shadow-[0_30px_80px_rgba(15,23,42,0.14)] dark:border-slate-700 dark:bg-slate-950"
+                className="relative overflow-hidden rounded-lg border border-slate-300 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900"
                 style={{
                   width: preset.width,
                   height: stageHeight,
                 }}
               >
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(59,130,246,0.08),_transparent_32%),linear-gradient(180deg,_rgba(248,250,252,0.95),_rgba(241,245,249,0.72))] dark:bg-[radial-gradient(circle_at_top_right,_rgba(59,130,246,0.18),_transparent_28%),linear-gradient(180deg,_rgba(15,23,42,0.9),_rgba(2,6,23,0.9))]" />
                 <div
                   className={clsx(
-                    "absolute inset-0",
+                    "absolute inset-0 opacity-40 dark:opacity-20",
                     canvasSettings.show_grid && "dot-grid-bg",
                   )}
                 />
                 <div className="relative flex h-full flex-col items-center justify-center px-8 text-center">
-                  <div className="mb-6 flex h-24 w-24 items-center justify-center rounded-[28px] border border-dashed border-slate-300 bg-white/70 dark:border-slate-700 dark:bg-slate-950/70">
-                    <Plus size={36} className="text-slate-400 dark:text-slate-500" />
+                  <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-lg border border-dashed border-slate-300 bg-slate-50 text-slate-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400">
+                    <Plus size={24} />
                   </div>
-                  <h3 className="text-2xl font-semibold text-slate-950 dark:text-slate-50">
-                    Start shaping the dashboard canvas
+                  <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
+                    Empty Dashboard Canvas
                   </h3>
-                  <p className="mt-3 max-w-xl text-sm text-slate-500 dark:text-slate-400">
-                    Ask a prompt below and each result will land on this presentation canvas with snap-to-grid layout and resize handles.
+                  <p className="mt-1.5 max-w-md text-xs text-slate-500 dark:text-slate-400">
+                    Run natural-language queries below to synthesize cards. Position, resize, and inspect telemetry with full snap-to-grid governance.
                   </p>
-                  <div className="mt-8 flex flex-wrap justify-center gap-3">
+                  <div className="mt-6 flex flex-wrap justify-center gap-2">
                     {["Show monthly revenue", "Top 10 customers", "Sales by region"].map((example) => (
                       <button
                         key={example}
                         type="button"
                         onClick={onPromptFocus}
-                        className="flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm text-slate-600 transition hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700 dark:border-slate-700 dark:bg-slate-950 dark:text-slate-300 dark:hover:border-blue-500 dark:hover:bg-blue-950/40 dark:hover:text-blue-200"
+                        className="inline-flex items-center gap-1.5 rounded-md border border-slate-200 bg-white px-3 py-1.5 font-mono text-xs text-slate-700 transition hover:border-slate-400 hover:text-slate-950 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:border-slate-600 dark:hover:text-white"
                       >
-                        <Sparkles size={14} />
+                        <span>&gt;</span>
                         {example}
                       </button>
                     ))}
@@ -208,7 +207,7 @@ export function DashboardCanvas({
   }
 
   return (
-    <div className="flex-1 overflow-auto bg-slate-100/80 p-6 dark:bg-slate-900/50">
+    <div className="flex-1 overflow-auto bg-slate-100 p-6 dark:bg-slate-950">
       <div className="mx-auto flex min-h-full min-w-fit items-start justify-center">
         <div style={{ width: scaledCanvas.width, height: scaledCanvas.height }}>
           <div
@@ -222,7 +221,7 @@ export function DashboardCanvas({
             <div
               ref={canvasRef}
               data-dashboard-canvas
-              className="relative rounded-[32px] bg-transparent"
+              className="relative rounded-lg bg-transparent"
               style={{
                 width: preset.width,
                 height: stageHeight,
@@ -232,22 +231,21 @@ export function DashboardCanvas({
                 <div
                   key={`section-${index + 1}`}
                   data-dashboard-section={index + 1}
-                  className="pointer-events-none absolute inset-x-0 overflow-hidden rounded-[32px] border border-slate-300 bg-white shadow-[0_24px_60px_rgba(15,23,42,0.12)] dark:border-slate-700 dark:bg-slate-950"
+                  className="pointer-events-none absolute inset-x-0 overflow-hidden rounded-lg border border-slate-300 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900"
                   style={{
                     top: getCanvasSectionTop(index, preset),
                     height: preset.height,
                   }}
                 >
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(59,130,246,0.08),_transparent_34%),linear-gradient(180deg,_rgba(255,255,255,0.98),_rgba(248,250,252,0.98))] dark:bg-[radial-gradient(circle_at_top_right,_rgba(59,130,246,0.14),_transparent_28%),linear-gradient(180deg,_rgba(15,23,42,0.96),_rgba(2,6,23,0.96))]" />
-                  <div className="absolute left-5 top-5 rounded-full border border-slate-200 bg-white/90 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-500 dark:border-slate-800 dark:bg-slate-950/90 dark:text-slate-400">
-                    Section {index + 1}
+                  <div className="absolute left-4 top-4 rounded-md border border-slate-200 bg-white px-2 py-0.5 font-mono text-[10px] font-semibold uppercase tracking-wider text-slate-500 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-400">
+                    SECTION {index + 1}
                   </div>
                 </div>
               ))}
 
               <div
                 className={clsx(
-                  "pointer-events-none absolute inset-0 rounded-[32px]",
+                  "pointer-events-none absolute inset-0 rounded-lg opacity-40 dark:opacity-20",
                   canvasSettings.show_grid && "dot-grid-bg",
                 )}
               />
@@ -257,9 +255,9 @@ export function DashboardCanvas({
                 layout={layouts}
                 cols={CANVAS_COLS}
                 width={preset.width}
-              rowHeight={rowHeight}
-              margin={CANVAS_MARGIN}
-              containerPadding={CANVAS_MARGIN}
+                rowHeight={rowHeight}
+                margin={CANVAS_MARGIN}
+                containerPadding={CANVAS_MARGIN}
                 compactType={null}
                 preventCollision={false}
                 draggableHandle=".drag-handle"
