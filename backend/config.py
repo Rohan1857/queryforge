@@ -22,7 +22,7 @@ class Settings(BaseSettings):
 
     # OpenRouter (preferred over direct Anthropic when set)
     OPENROUTER_API_KEY: str = ""
-    LLM_MODEL: str = "anthropic/claude-sonnet-4-20250514"
+    LLM_MODEL: str = "cohere/north-mini-code:free"
 
     # JWT
     JWT_SECRET: str = "change-me-in-production"

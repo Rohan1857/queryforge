@@ -31,7 +31,7 @@ services:
       - key: GOOGLE_CLIENT_SECRET
         sync: false
       - key: LLM_MODEL
-        value: anthropic/claude-sonnet-4-20250514
+        value: cohere/north-mini-code:free
       - key: DEV_AUTH_BYPASS
         value: "false"
 
