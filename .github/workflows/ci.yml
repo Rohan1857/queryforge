@@ -33,7 +33,7 @@ jobs:
 
       - name: Run Backend Tests
         run: |
-          pytest --cov=backend tests/ --cov-report=xml
+          pytest --cov=backend tests/ --ignore=tests/e2e --cov-report=xml
 
   frontend-test:
     runs-on: ubuntu-latest

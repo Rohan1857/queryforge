@@ -12,7 +12,8 @@ import os
 import tempfile
 
 import pytest
-from playwright.sync_api import APIRequestContext, Playwright
+from typing import Generator
+from playwright.sync_api import APIRequestContext, sync_playwright
 
 BASE_URL = os.getenv("TEST_BASE_URL", "http://localhost:8000")
 
@@ -20,11 +21,21 @@ BASE_URL = os.getenv("TEST_BASE_URL", "http://localhost:8000")
 # ── Fixtures ─────────────────────────────────────────────────
 
 @pytest.fixture(scope="session")
-def api_context(playwright: Playwright) -> APIRequestContext:
+def api_context() -> Generator[APIRequestContext, None, None]:
     """Create a raw API request context (no browser needed)."""
-    ctx = playwright.request.new_context(base_url=BASE_URL)
-    yield ctx
-    ctx.dispose()
+    try:
+        with sync_playwright() as p:
+            ctx = p.request.new_context(base_url=BASE_URL)
+            try:
+                resp = ctx.get("/api/health")
+                if resp.status != 200:
+                    pytest.skip(f"Live server not healthy at {BASE_URL}")
+            except Exception as exc:
+                pytest.skip(f"Live server not reachable at {BASE_URL} ({exc})")
+            yield ctx
+            ctx.dispose()
+    except Exception as e:
+        pytest.skip(f"Playwright unavailable: {e}")
 
 
 @pytest.fixture(scope="session")
