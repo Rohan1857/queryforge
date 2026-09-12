@@ -63,7 +63,12 @@ async def upload_file(
         raise HTTPException(status.HTTP_413_REQUEST_ENTITY_TOO_LARGE, "File exceeds 50MB limit")
 
     # Save to disk
-    user_dir = os.path.join(settings.UPLOAD_DIR, str(user.id))
+    upload_base = (
+        "/tmp/uploads"
+        if (os.name != "nt" and not os.path.isabs(settings.UPLOAD_DIR))
+        else os.path.abspath(settings.UPLOAD_DIR)
+    )
+    user_dir = os.path.join(upload_base, str(user.id))
     os.makedirs(user_dir, exist_ok=True)
     safe_name = f"{uuid.uuid4().hex}_{file.filename}"
     file_path = os.path.join(user_dir, safe_name)
@@ -83,12 +88,14 @@ async def upload_file(
         schema = await connector.get_schema()
     except Exception as e:
         # Clean up on failure
-        os.remove(file_path)
+        if os.path.exists(file_path):
+            os.remove(file_path)
         raise HTTPException(status.HTTP_422_UNPROCESSABLE_ENTITY, f"Failed to parse file: {e}")
     finally:
         await connector.disconnect()
 
     # Create DB record
+    now_utc = datetime.now(timezone.utc)
     conn = DataConnection(
         user_id=user.id,
         name=file.filename or "Uploaded file",
@@ -96,7 +103,8 @@ async def upload_file(
         config=config,
         schema_cache=schema.model_dump(),
         status="active",
-        last_synced=datetime.now(timezone.utc),
+        last_synced=now_utc,
+        created_at=now_utc,
     )
     db.add(conn)
     await db.flush()

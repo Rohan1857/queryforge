@@ -58,7 +58,7 @@ class ConnectionRead(BaseModel):
     status: str
     schema_cache: Optional[SchemaMetadata] = None
     last_synced: Optional[datetime] = None
-    created_at: datetime
+    created_at: Optional[datetime] = None
 
     model_config = {"from_attributes": True}
 

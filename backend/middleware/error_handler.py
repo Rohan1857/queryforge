@@ -33,6 +33,6 @@ async def generic_error_handler(_request: Request, exc: Exception) -> JSONRespon
         status_code=500,
         content={
             "error": "Internal Server Error",
-            "detail": "An unexpected error occurred",
+            "detail": f"{type(exc).__name__}: {exc}",
         },
     )
