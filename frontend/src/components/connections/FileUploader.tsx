@@ -56,7 +56,7 @@ export function FileUploader({ onUploadComplete }: FileUploaderProps) {
       formData.append("file", selectedFile);
 
       try {
-        const response = await api.post<UploadResult>("/api/upload", formData, {
+        const response = await api.post<UploadResult>("/upload", formData, {
           headers: { "Content-Type": "multipart/form-data" },
           onUploadProgress: (progressEvent) => {
             if (progressEvent.total) {
@@ -68,9 +68,20 @@ export function FileUploader({ onUploadComplete }: FileUploaderProps) {
           },
         });
 
-        setUploadResult(response.data);
+        const raw = response.data as any;
+        const firstTable = raw?.schema_cache?.tables?.[0];
+        const normalizedResult: UploadResult = {
+          file_id: raw.id || raw.file_id || "",
+          filename: raw.name || raw.filename || selectedFile.name,
+          columns: (raw.columns || firstTable?.columns || []).map((c: any) => ({
+            name: c.name,
+            type: c.type,
+          })),
+          row_count: raw.row_count ?? firstTable?.row_count ?? 0,
+        };
+        setUploadResult(normalizedResult);
         setUploadProgress(100);
-        onUploadComplete(response.data);
+        onUploadComplete(normalizedResult);
       } catch (err: unknown) {
         const message =
           err instanceof Error ? err.message : "Upload failed. Please try again.";
