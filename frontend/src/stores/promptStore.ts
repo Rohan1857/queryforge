@@ -60,7 +60,18 @@ export const usePromptStore = create<PromptState>((set, get) => ({
   fetchSuggestions: async (connectionId) => {
     try {
       const suggestions = await promptApi.suggest(connectionId);
-      set({ suggestions });
+      const cleaned = (suggestions || []).flatMap((s) => {
+        if (typeof s === "string" && s.trim().startsWith("[")) {
+          try {
+            const parsed = JSON.parse(s);
+            return Array.isArray(parsed) ? parsed : [s];
+          } catch {
+            return [s];
+          }
+        }
+        return [s];
+      });
+      set({ suggestions: cleaned });
     } catch {
       // Suggestions are non-critical
     }
